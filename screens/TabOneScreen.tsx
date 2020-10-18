@@ -4,19 +4,22 @@ import { Image, StyleSheet, TouchableOpacity, TextInput, FlatList } from 'react-
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 
-
 const Item = ({ name }) => (
-    <View >
-        <Text>{name}</Text>
-    </View>
+  <View>
+    <Text>{name}</Text>
+  </View>
 );
 
 export default function TabOneScreen() {
-  const [name, onChangeName] = React.useState('Ingrese nombre medico');
-  const [speciality, onChangeSpeciality] = React.useState('Ingrese especialidad');
-  const [medics, onChangeMedics] = React.useState('');
+  const [name, onChangeName] = React.useState('');
+  const [speciality, onChangeSpeciality] = React.useState('');
+  const [medics, onChangeMedics] = React.useState([]);
 
-  const renderItem = ({ item }) => <Item title={item.name} />;
+  const renderItem = ({ item }) =>
+  <>
+    <Text>{item.name}:{item.speciality}</Text>
+  </>
+      ;
 
   return (
       <View style={styles.container}>
@@ -25,11 +28,13 @@ export default function TabOneScreen() {
         </Text>
         <TextInput
             style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+            placeholder={'Ingrese nombre medico'}
             onChangeText={text => onChangeName(text)}
             value={name}
         />
         <TextInput
             style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+            placeholder={'Ingrese especialidad'}
             onChangeText={text => onChangeSpeciality(text)}
             value={speciality}
         />
@@ -38,14 +43,17 @@ export default function TabOneScreen() {
           <Text style={styles.buttonText}>Guardar medico</Text>
         </TouchableOpacity>
 
-        <Text  style={styles.instructions} >
+        <Text style={styles.instructions} >
           Seccion obtener medicos
         </Text>
 
-        <TouchableOpacity onPress={() => getMedics()} style={styles.button}>
+        <TouchableOpacity onPress={() =>
+          getMedics()
+            .then(medics => onChangeMedics(medics))
+            .then(() => console.log(medics))} style={styles.button}>
           <Text style={styles.buttonText}>Obtener medicos</Text>
         </TouchableOpacity>
-        <FlatList data={getMedics()} renderItem={renderItem} keyExtractor={item => item._id} />
+        <FlatList data={medics} renderItem={renderItem} keyExtractor={item => item._id} />
 
       </View>
   );
@@ -59,8 +67,6 @@ function getMedics(){
       'Content-Type': 'application/json',
     },
   }).then(response => response.json())
-
-
 }
 
 function postMedic(name: string, speciality: string){
@@ -105,8 +111,8 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "blue",
-    padding: 20,
-    borderRadius: 5,
+    padding: 10,
+    borderRadius: 10,
   },
   buttonText: {
     fontSize: 20,
