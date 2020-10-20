@@ -1,8 +1,6 @@
-import {useState} from "react";
-import {ActivityIndicator, StyleSheet, TextInput, TouchableOpacity} from "react-native";
-import {Text, View} from "./Themed";
 import * as React from "react";
-import RefreshableList from "./MedicsList";
+import {StyleSheet, TextInput, TouchableOpacity} from "react-native";
+import {Text} from "./Themed";
 
 const NewMedic = () => {
 
@@ -12,27 +10,28 @@ const NewMedic = () => {
   return (
     <>
     <Text  style={styles.instructions} >
-      Seccion nuevo medico
+      Agregar nuevo médico
     </Text>
   <TextInput
-    style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+    style={styles.cell}
     placeholder={'Ingrese nombre medico'}
     onChangeText={text => setName(text)}
     value={name}
   />
   <TextInput
-    style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+    style={styles.cell}
     placeholder={'Ingrese especialidad'}
     onChangeText={text => setSpecialist(text)}
     value={speciality}
   />
 
   <TouchableOpacity onPress={() => postMedic(name,speciality)} style={styles.button}>
-    <Text style={styles.buttonText}>Guardar medico</Text>
+    <Text style={styles.buttonText}>Agregar médico</Text>
   </TouchableOpacity>
 </>
   );
 }
+
 function postMedic(name: string, speciality: string){
   fetch('https://cartillalibre-back.herokuapp.com/medics', {
     method: 'POST',
@@ -46,11 +45,25 @@ function postMedic(name: string, speciality: string){
     })
   })
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  instructions: {
+    color: '#888',
+    fontSize: 18,
+    marginHorizontal: 15,
+  },
+  cell: {
+    height: 40,
+    width: 175,
+    borderColor: 'gray',
+    borderWidth: 1,
+    padding: 10,
+    margin: 10
   },
   title: {
     fontSize: 20,

@@ -9,7 +9,7 @@ export default function TabTwoScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.instructions} >
-        Seccion obtener medicos
+        Lista de médicos
       </Text>
       <RefreshableList/>
     </View>
@@ -21,15 +21,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
   },
   instructions: {
     color: '#888',

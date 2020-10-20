@@ -1,9 +1,8 @@
-import { Component, useState } from "react";
-import {ActivityIndicator, Alert, FlatList, RefreshControl, StyleSheet, TouchableOpacity} from "react-native";
 import * as React from "react";
-import {Text, View} from "./Themed";
-import { DataTable } from 'react-native-paper'
-
+import {useState} from "react";
+import {ActivityIndicator, StyleSheet, TouchableOpacity} from "react-native";
+import {Text} from "./Themed";
+import {DataTable} from 'react-native-paper'
 
 const RefreshableList = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -17,7 +16,7 @@ const RefreshableList = () => {
         setRefreshing(false)
         }
       }  style={styles.button}>
-      <Text>Obtener medicos</Text>
+      <Text style={styles.buttonText}>Recargar lista</Text>
 
       </TouchableOpacity>
 
@@ -45,14 +44,6 @@ const RefreshableList = () => {
 </>
   );
 }
-
-
-
-const renderItem = ({ item }) =>
-  <>
-    <Text>{item.name}:{item.speciality}</Text>
-  </>
-;
 
 function getMedics() {
   return fetch('https://cartillalibre-back.herokuapp.com/medics', {
