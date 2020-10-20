@@ -1,9 +1,12 @@
 import * as React from "react";
-import {StyleSheet, TextInput, TouchableOpacity} from "react-native";
+import {StyleSheet, TextInput, TouchableOpacity, ToastAndroid} from "react-native";
 import {Text} from "./Themed";
 
-const NewMedic = () => {
+const showToast = () => {
+  ToastAndroid.show('Se ha guardado el medico', ToastAndroid.SHORT);
+};
 
+const NewMedic = () => {
   const [name, setName] = React.useState('');
   const [speciality, setSpecialist] = React.useState('');
 
@@ -14,7 +17,7 @@ const NewMedic = () => {
     </Text>
   <TextInput
     style={styles.cell}
-    placeholder={'Ingrese nombre medico'}
+    placeholder={'Ingrese nombre'}
     onChangeText={text => setName(text)}
     value={name}
   />
@@ -25,7 +28,10 @@ const NewMedic = () => {
     value={speciality}
   />
 
-  <TouchableOpacity onPress={() => postMedic(name,speciality)} style={styles.button}>
+  <TouchableOpacity onPress={() =>{
+    postMedic(name,speciality)
+    setName("")
+    setSpecialist("")}} style={styles.button}>
     <Text style={styles.buttonText}>Agregar médico</Text>
   </TouchableOpacity>
 </>
@@ -43,6 +49,8 @@ function postMedic(name: string, speciality: string){
       name: name,
       speciality: speciality,
     })
+  }).then(()=>{
+    showToast()
   })
 }
 
