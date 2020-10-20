@@ -1,86 +1,16 @@
 import * as React from 'react';
-import { Image, StyleSheet, TouchableOpacity, TextInput, FlatList } from 'react-native';
+import { StyleSheet, TouchableOpacity, TextInput, FlatList, RefreshControl} from 'react-native';
 
-import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
-
-const Item = ({ name }) => (
-  <View>
-    <Text>{name}</Text>
-  </View>
-);
+import NewMedic from "../components/NewMedic";
 
 export default function TabOneScreen() {
-  const [name, onChangeName] = React.useState('');
-  const [speciality, onChangeSpeciality] = React.useState('');
-  const [medics, onChangeMedics] = React.useState([]);
-
-  const renderItem = ({ item }) =>
-  <>
-    <Text>{item.name}:{item.speciality}</Text>
-  </>
-      ;
 
   return (
       <View style={styles.container}>
-        <Text  style={styles.instructions} >
-          Seccion nuevo medico
-        </Text>
-        <TextInput
-            style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-            placeholder={'Ingrese nombre medico'}
-            onChangeText={text => onChangeName(text)}
-            value={name}
-        />
-        <TextInput
-            style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-            placeholder={'Ingrese especialidad'}
-            onChangeText={text => onChangeSpeciality(text)}
-            value={speciality}
-        />
-
-        <TouchableOpacity onPress={() => postMedic(name,speciality)} style={styles.button}>
-          <Text style={styles.buttonText}>Guardar medico</Text>
-        </TouchableOpacity>
-
-        <Text style={styles.instructions} >
-          Seccion obtener medicos
-        </Text>
-
-        <TouchableOpacity onPress={() =>
-          getMedics()
-            .then(medics => onChangeMedics(medics))
-            .then(() => console.log(medics))} style={styles.button}>
-          <Text style={styles.buttonText}>Obtener medicos</Text>
-        </TouchableOpacity>
-        <FlatList data={medics} renderItem={renderItem} keyExtractor={item => item._id} />
-
+      <NewMedic/>
       </View>
   );
-}
-
-function getMedics(){
-  return fetch('https://cartillalibre-back.herokuapp.com/medics', {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  }).then(response => response.json())
-}
-
-function postMedic(name: string, speciality: string){
-  fetch('https://cartillalibre-back.herokuapp.com/medics', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      name: name,
-      speciality: speciality,
-    })
-  })
 }
 
 
@@ -104,11 +34,7 @@ const styles = StyleSheet.create({
     height: 159,
     marginBottom: 10,
   },
-  instructions: {
-    color: '#888',
-    fontSize: 18,
-    marginHorizontal: 15,
-  },
+
   button: {
     backgroundColor: "blue",
     padding: 10,

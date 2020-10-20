@@ -8,6 +8,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import { AntDesign } from '@expo/vector-icons';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -19,17 +20,17 @@ export default function BottomTabNavigator() {
       initialRouteName="TabOne"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="TabOne"
+        name="Agregar"
         component={TabOneNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <AntDesign name="plus" size={24} color="black" />,
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="Buscar"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+          tabBarIcon: ({ color }) => <AntDesign name="search1" size={24} color="black" />,
         }}
       />
     </BottomTab.Navigator>
